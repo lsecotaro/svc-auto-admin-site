@@ -1,4 +1,4 @@
-package com.example.restservice;
+package com.devsupernova.autoadminsite.restservice;
 
 import lombok.Builder;
 import lombok.Getter;
