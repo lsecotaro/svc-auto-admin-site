@@ -1,10 +1,10 @@
 package com.devsupernova.autoadminsite.restservice.product;
 
+import com.devsupernova.autoadminsite.restservice.utils.IdGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -15,8 +15,12 @@ public class ProductService {
         return repository.findAll();
     }
 
+    public Product getProductsByCategory(String category){
+        return repository.findByCategoryId(category);
+    }
+
     public Product add(Product product){
-        product.setId(UUID.randomUUID().toString());
+        product.setId(IdGenerator.generate());
         return repository.save(product);
     }
 
@@ -25,7 +29,6 @@ public class ProductService {
     }
 
     public void delete(String id){
-        Product product = repository.getOne(id);
-        repository.delete(product);
+        repository.delete(repository.getOne(id));
     }
 }

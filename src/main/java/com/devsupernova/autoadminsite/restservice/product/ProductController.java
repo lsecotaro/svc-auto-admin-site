@@ -1,11 +1,5 @@
 package com.devsupernova.autoadminsite.restservice.product;
 
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.devsupernova.autoadminsite.restservice.CustomMenu;
-import com.devsupernova.autoadminsite.restservice.MyCustomMenuItem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
+import java.util.List;
+
 @RestController
 @RequestMapping("/v1/products")
 @RequiredArgsConstructor
@@ -33,6 +30,14 @@ public class ProductController {
 		return ResponseEntity.ok()
 				.headers(responseHeaders)
 				.body(service.getAllProducts());
+	}
+
+	@GetMapping("/{category}")
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Product> products(@PathVariable("category") String category) {
+		return ResponseEntity.ok()
+				.headers(responseHeaders)
+				.body(service.getProductsByCategory(category));
 	}
 
 	@PostMapping
@@ -59,31 +64,4 @@ public class ProductController {
 				.headers(responseHeaders)
 				.build();
 	}
-
-	@GetMapping("/menu")
-	public ResponseEntity<CustomMenu> menu() {
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set("Access-Control-Allow-Origin", "*");
-
-		return ResponseEntity.ok()
-				.headers(responseHeaders)
-				.body(mockMenu());
-	}
-
-	private CustomMenu mockMenu() {
-		List<MyCustomMenuItem> items = new ArrayList<>();
-		items.add(MyCustomMenuItem.builder()
-				.name("Productos")
-				.build());
-		items.add(MyCustomMenuItem.builder()
-				.name("Nosotros")
-				.build());
-		items.add(MyCustomMenuItem.builder()
-				.name("Contactos")
-				.build());
-		return CustomMenu.builder()
-				.items(items)
-				.build();
-	}
-
 }
