@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -27,6 +26,7 @@ public class CategoryController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Category>> categories() {
+
         return ResponseEntity.ok()
                 .headers(responseHeaders)
                 .body(service.getAll());
@@ -41,9 +41,9 @@ public class CategoryController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Category> create(@RequestBody Category category){
-        return ResponseEntity.created(URI.create("/"))
+        return ResponseEntity.ok()
                 .headers(responseHeaders)
                 .body(service.add(category));
     }

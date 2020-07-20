@@ -10,6 +10,8 @@ public class StartUpConfig {
     public HttpHeaders headers(){
         HttpHeaders headers = new HttpHeaders();
         headers.set("Access-Control-Allow-Origin", "*");
+        headers.set("Access-Control-Allow-Headers", "*");
+        headers.set("Access-Control-Allow-Methods", "POST,GET,PUT,DELETE");
         return headers;
     }
 }
