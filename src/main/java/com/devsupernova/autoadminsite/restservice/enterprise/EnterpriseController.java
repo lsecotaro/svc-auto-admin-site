@@ -1,4 +1,4 @@
-package com.devsupernova.autoadminsite.restservice.categories;
+package com.devsupernova.autoadminsite.restservice.enterprise;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -18,52 +17,35 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+
 @RestController
-@RequestMapping("/v1/categories")
+@RequestMapping("/v1/enterprise")
 @CrossOrigin(origins={"http://localhost:3000","https://web-iu.herokuapp.com/"})
 @RequiredArgsConstructor
 @Slf4j
-public class CategoryController {
-    private final CategoryService service;
+public class EnterpriseController {
+    private final EnterpriseService service;
     private final HttpHeaders responseHeaders;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<Category>> categories() {
-
+    public ResponseEntity<List<Enterprise>> getEnterprises(){
         return ResponseEntity.ok()
                 .headers(responseHeaders)
-                .body(service.getAll());
-    }
-
-    @GetMapping("/actives")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<Category>> activeCategories() {
-        return ResponseEntity.ok()
-                .headers(responseHeaders)
-                .body(service.getAllActive());
+                .body(service.getEnterprises());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Category> create(@RequestBody Category category){
+    public ResponseEntity<Enterprise> saveEnterprises(@RequestBody Enterprise enterprise){
         return ResponseEntity.ok()
                 .headers(responseHeaders)
-                .body(service.add(category));
-    }
-
-    @PutMapping
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Category> update(@RequestBody Category category){
-        return ResponseEntity.ok()
-                .headers(responseHeaders)
-                .body(service.update(category));
+                .body(service.upsert(enterprise));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> delete(@PathVariable String id){
-        log.info("delete");
+    public ResponseEntity<Void> saveEnterprises(@PathVariable String id){
         service.delete(id);
         return ResponseEntity.ok()
                 .headers(responseHeaders)

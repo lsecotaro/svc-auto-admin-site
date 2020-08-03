@@ -15,8 +15,8 @@ public class ProductService {
         return repository.findAll();
     }
 
-    public Product getProductsByCategory(String category){
-        return repository.findByCategoryId(category);
+    public List<Product> getProductsByCategory(String category){
+        return repository.findByCategories_Name(category);
     }
 
     public Product add(Product product){
